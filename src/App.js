@@ -1,25 +1,40 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
-function App() {
+import Table from './components/Table';
+import AddBook from './components/AddBook';
+
+const App = () => {
+  const [bookCollection, setCollection] = useState(new Map());
+
+  const saveBookCollection = (newBookCollection) => {
+    setCollection(newBookCollection);
+    window.localStorage.setItem('bookCollection', JSON.stringify(newBookCollection));
+  }
+
+
+  useEffect(() => {
+    let bookStorage = window.localStorage.getItem('bookCollection');
+
+    if (bookStorage !== null) {
+      // Local Stoage exists
+      console.log('Found bookCollection in local storage.')
+      setCollection(JSON.parse(bookStorage));
+    } 
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Books I have Read.</h1>
+      <AddBook
+        bookCollection={bookCollection}
+        saveBookCollection={saveBookCollection}
+      />
+      <Table 
+        bookCollection={bookCollection}
+      />
     </div>
-  );
+  )
 }
 
 export default App;
