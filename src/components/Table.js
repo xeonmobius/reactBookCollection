@@ -1,18 +1,13 @@
 import React from 'react';
+import DeleteBookBtn from './DeleteBookBtn';
 
-const Table = ({bookCollection}) => {
-    const drawBooks = () => {
-        let rows;
-        for (let key in bookCollection) {
-            rows = rows+
-            <tr>
-                <td>{bookCollection[key].date}</td>
-                <td>{bookCollection[key].title}</td>
-                <td>{bookCollection[key].author}</td>
-                <td>{bookCollection[key].rating}</td>
-            </tr>
-        }
-        return rows;
+const Table = ({bookCollection, saveBookCollection}) => {
+    const map = new Map(Object.entries(bookCollection));
+    const bookEntries = [...map.values()]
+
+    const deleteBook = (title) => {
+        map.delete(title)
+        saveBookCollection(map)
     }
 
     return (
@@ -22,8 +17,25 @@ const Table = ({bookCollection}) => {
                 <th>Title</th>
                 <th>Author</th>
                 <th>Rating</th>
+                <th>Comments</th>
+                <th></th>
             </tr>
-            {drawBooks()}
+            {bookEntries.map((entry) => {
+                return (
+                    <tr>
+                        <td>{entry.date}</td>
+                        <td>{entry.title}</td>
+                        <td>{entry.author}</td>
+                        <td>{entry.rating}</td>
+                        <td>{entry.comment}</td>
+                        <td><DeleteBookBtn 
+                                title={entry.title}
+                                deleteBook={deleteBook}
+                            />
+                        </td>
+                    </tr>
+                )
+            })}
         </table>
     )
 }

@@ -12,13 +12,12 @@ const App = () => {
     window.localStorage.setItem('bookCollection', JSON.stringify(newBookCollection));
   }
 
-
   useEffect(() => {
     let bookStorage = window.localStorage.getItem('bookCollection');
 
     if (bookStorage !== null) {
       // Local Stoage exists
-      console.log('Found bookCollection in local storage.')
+      console.log('Found bookCollection in local storage.', bookStorage);
       setCollection(JSON.parse(bookStorage));
     } 
   }, []);
@@ -32,6 +31,7 @@ const App = () => {
       />
       <Table 
         bookCollection={bookCollection}
+        saveBookCollection={saveBookCollection}
       />
     </div>
   )
