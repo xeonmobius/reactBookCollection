@@ -1,0 +1,13 @@
+table {
+    margin: auto;
+    width: 75%;
+    height: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+th {
+    font-size: 1.5em;
+    padding: 1em 2em 1em;
+}

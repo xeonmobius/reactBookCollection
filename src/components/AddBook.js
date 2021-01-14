@@ -1,10 +1,12 @@
 import React from 'react';
+import './AddBook.css'
 
-const AddBook = ({bookCollection, saveBookCollection}) => {
+const AddBook = ({ bookCollection, saveBookCollection }) => {
 
     const addNewBook = (event) => {
         event.preventDefault();
 
+        // creates a book entry object that will be saved
         const bookEntry = {
             date: document.getElementById("date") === null ? "" : document.getElementById("date").value,
             title: document.getElementById("title") === null ? "" : document.getElementById("title").value,
@@ -13,12 +15,10 @@ const AddBook = ({bookCollection, saveBookCollection}) => {
             comment: document.getElementById("comment") === null ? "" : document.getElementById("comment").value,
         }
 
-        console.log(bookEntry)
-        let filled = true
-        for (let value of Object.values(bookEntry)){
-            filled = value !== "" ? true : false
-        }
+        // Checks if all the fields are filled or not
+        let filled = Object.values(bookEntry).every(value => value !== "")
 
+        // add the book to the bookcollection state
         if (filled) {
             const newBookCollection = {...bookCollection}
             console.log('Adding Book to collection.')
@@ -43,7 +43,7 @@ const AddBook = ({bookCollection, saveBookCollection}) => {
                 <input type="number" id="rating" min="1" max="5"></input><br></br>
                 <label> Comments </label>
                 <input type="text" id="comment"></input><br></br>
-                <input type="submit" value="Add"></input>
+                <input type="submit" value="Add" className="addButton"></input>
             </form>
         </div>
     )

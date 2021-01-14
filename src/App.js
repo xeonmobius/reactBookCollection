@@ -5,20 +5,28 @@ import Table from './components/Table';
 import AddBook from './components/AddBook';
 
 const App = () => {
+  // Create bookCollection as a state value
   const [bookCollection, setCollection] = useState(new Map());
 
+  // Create a handler function that saves state and to local storage
   const saveBookCollection = (newBookCollection) => {
     setCollection(newBookCollection);
     window.localStorage.setItem('bookCollection', JSON.stringify(newBookCollection));
   }
 
+  // Activate once the component has loaded
   useEffect(() => {
+
+    // Get any book collection in local storage
     let bookStorage = window.localStorage.getItem('bookCollection');
 
+    // Load the storage object if its not null
     if (bookStorage !== null) {
+
       // Local Stoage exists
-      console.log('Found bookCollection in local storage.', bookStorage);
-      setCollection(JSON.parse(bookStorage));
+      let jsonCollection = JSON.parse(bookStorage);
+      console.log('Found bookCollection in local storage.', jsonCollection);
+      setCollection(jsonCollection);
     } 
   }, []);
 
